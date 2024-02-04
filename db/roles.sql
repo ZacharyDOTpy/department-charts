@@ -1,2 +1,2 @@
-SELECT * FROM roles
-JOIN departments ON roles.department_id = departments.id;
+SELECT * FROM jobs
+JOIN departments ON jobs.department_id = departments.id;
