@@ -35,7 +35,7 @@ const start = () => {
     ]
   })
 
-  .then((answers) => actions[answers.view]())
+  .then((answer) => actions[answer.view]())
 };
 
 const actions = {
@@ -107,7 +107,7 @@ const actions = {
         name: 'new_job'
       },
       {
-        message: 'Type the salary of new role',
+        message: 'Type the salary of new job',
         type: 'number',
         name: 'new_salary'
       }
@@ -117,14 +117,14 @@ const actions = {
     .then((answer) => {
       db.query(`SELECT id as value, name as name FROM departments`, (error, departments = []) => {
         prompt({
-          message: 'Choose the department for new role',
+          message: 'Choose the department for new job',
           type: 'rawlist',
           name: 'id',
           choices: departments
         })
 
         .then((departmentChoice) => {
-          db.query(`INSERT INTO roles (title, salary, department_id) VALUES ('${answer.new_job}', ${answer.new_salary}, ${departmentChoice.id} )`, (error, jobs) => {
+          db.query(`INSERT INTO jobs (title, salary, department_id) VALUES ('${answer.new_job}', ${answer.new_salary}, ${departmentChoice.id} )`, (error, jobs) => {
             if (error)
             console.error(error);
             console.log(`Added ${answer.new_job} as new job`);
@@ -154,7 +154,7 @@ const actions = {
 
     prompt(employeePrompt)
     .then((answer) => {
-      db.query(`SELECT id as value, title as name FROM roles`, (error, jobs = []) => {
+      db.query(`SELECT id as value, title as name FROM jobs`, (error, jobs = []) => {
         prompt({
           message: 'Choose a job for the employee',
           type:'rawlist',
@@ -178,7 +178,7 @@ const actions = {
                 const managerId = managerChoiceData[0][0].id;
                 const managerName = managerChoiceData[0][0].first_name + " " + managerChoiceData[0][0].last_name;
 
-                db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id, manager_name) VALUES ('${answer.new_first}', '${answer.new_last}', ${jobChoice.id}, ${managerId}, '${managerName}')`, (error, employees) => {
+                db.query(`INSERT INTO employees (first_name, last_name, job_id, manager_id, manager_name) VALUES ('${answer.new_first}', '${answer.new_last}', ${jobChoice.id}, ${managerId}, '${managerName}')`, (error, employees) => {
                   if (error)
                   console.error(error);
                   console.log(`Added ${answer.new_first} ${answer.new_last} as a new employee`);
@@ -198,26 +198,26 @@ const actions = {
 
     db.query(`SELECT id as value, CONCAT(first_name, ' ', last_name) as name FROM employees`, (error, employees = []) => {
       prompt({
-        message: 'Choose the employee who needs their role updated',
+        message: 'Choose the employee who needs their job updated',
         type:'rawlist',
         name: 'id',
         choices: employees,
       })
 
       .then((employeeChoice) => {
-        db.query(`SELECT id as value, title as name FROM roles`, (error, roles = []) => {
+        db.query(`SELECT id as value, title as name FROM jobs`, (error, jobs = []) => {
           prompt({
-            message: 'Choose a new role for the employee',
+            message: 'Choose a new job for the employee',
             type: 'rawlist',
             name: 'id',
-            choices: roles,
+            choices: jobs,
           })
 
           .then((newJobChoice) => {
-            db.query(`UPDATE employees SET role_id = ${newJobChoice.id} WHERE employees.id = ${employeeChoice.id}`, (error, employees) => {
+            db.query(`UPDATE employees SET job_id = ${newJobChoice.id} WHERE employees.id = ${employeeChoice.id}`, (error, employees) => {
               if (error)
               console.error(error);
-              console.log(`Changed employee's role`);
+              console.log(`Changed employee's job`);
 
               start();
             })
