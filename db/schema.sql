@@ -9,6 +9,15 @@ CREATE TABLE departments (
   name VARCHAR(30) NOT NULL
 );
 
+CREATE TABLE jobs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL NOT NULL,
+  department_id INT,
+  Foreign Key (department_id) REFERENCES departments(id)
+  ON DELETE SET NULL
+);
+
 CREATE TABLE employees (
   id INT AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30) NOT NULL,
@@ -18,14 +27,5 @@ CREATE TABLE employees (
   job_id INT NOT NULL,
   Foreign Key (job_id) REFERENCES jobs(id),
   Foreign Key (manager_id) REFERENCES employees(id)
-  ON DELETE SET NULL
-);
-
-CREATE TABLE jobs (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(30) NOT NULL,
-  salary DECIMAL NOT NULL,
-  department_id INT,
-  Foreign Key (department_id) REFERENCES departments(id)
   ON DELETE SET NULL
 );

@@ -28,7 +28,7 @@ VALUES ('Advert Manager', 120000.00, 1),
 ('HR Consultant', 92000.00, 6),
 ('Dispute Specialist', 78000.00, 6);
 
-INSERT INTO employees (first_name, last_name, role_id, manager_name, manager_id)
+INSERT INTO employees (first_name, last_name, job_id, manager_name, manager_id)
 VALUES ('John', 'Doe', 1, NULL, NULL),
 ('Stephany', 'King', 2, 'John Doe', 1),
 ('Nick', 'Green', 3, 'John Doe', 1),
