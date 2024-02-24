@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 
 require("console.table");
 
+// Connect to database
 const db = mysql.createConnection(
   {
     host: "127.0.0.1",
@@ -16,6 +17,7 @@ const db = mysql.createConnection(
 
 const prompt = inquirer.createPromptModule();
 
+// Start the application & prompt the user
 const start = () => {
   prompt({
     message: "Choose an option",
@@ -37,6 +39,7 @@ const start = () => {
 };
 
 const actions = {
+  // View all departments
   departmentsList: () => {
     db.query("SELECT * FROM departments", (error, departments) => {
       if (error) console.error(error);
@@ -46,6 +49,7 @@ const actions = {
     });
   },
 
+  // View all jobs
   jobsList: () => {
     db.query("SELECT * FROM jobs", (error, jobs) => {
       if (error) console.error(error);
@@ -55,6 +59,7 @@ const actions = {
     });
   },
 
+  // View all employees
   employeesList: () => {
     const join = `
     SELECT employees.id, employees.first_name, employees.last_name, 
@@ -73,6 +78,7 @@ const actions = {
     });
   },
 
+  // Add a new department
   addDepartment: () => {
     const prompt = inquirer.createPromptModule();
     prompt({
@@ -92,6 +98,7 @@ const actions = {
     });
   },
 
+  // Add a new job
   addJob: () => {
     const prompt = inquirer.createPromptModule();
 
@@ -133,6 +140,7 @@ const actions = {
     });
   },
 
+  // Add a new employee
   addEmployee: () => {
     const prompt = inquirer.createPromptModule();
 
@@ -201,6 +209,7 @@ const actions = {
     });
   },
 
+  // Update an employee's job
   updateJob: () => {
     const prompt = inquirer.createPromptModule();
 
@@ -239,6 +248,7 @@ const actions = {
     );
   },
 
+  // Exit the application
   exit: () => {
     console.log("Bye");
     process.exit();

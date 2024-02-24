@@ -1,5 +1,6 @@
 USE company_db
 
+-- seeds for departments
 INSERT INTO departments (name)
 VALUES ('Advirtisment'),
 ('Research'),
@@ -8,6 +9,7 @@ VALUES ('Advirtisment'),
 ('SocialMedia'),
 ('HumanResources');
 
+-- seeds for jobs
 INSERT INTO jobs (title, salary, department_id)
 VALUES ('Advert Manager', 120000.00, 1),
 ('Ad Consultant', 80000.00, 1),
@@ -28,6 +30,7 @@ VALUES ('Advert Manager', 120000.00, 1),
 ('HR Consultant', 92000.00, 6),
 ('Dispute Specialist', 78000.00, 6);
 
+-- seeds for employees
 INSERT INTO employees (first_name, last_name, job_id, manager_name, manager_id)
 VALUES ('John', 'Doe', 1, NULL, NULL),
 ('Stephany', 'King', 2, 'John Doe', 1),
